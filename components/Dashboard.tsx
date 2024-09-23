@@ -61,6 +61,10 @@ export default function Dashboard() {
 
     }, [searchName])
 
+    const getTransactionHistory = (user : User) => {
+        router.push(`/transactionhistory?userId=${user.id}&firstname=${user.firstname}&lastname=${user.lastname}`)
+    }
+
     const handleSendMoney = (user: User) => {
         router.push(`/sendmoney?userId=${user.id}&firstname=${user.firstname}&lastname=${user.lastname}`)
     }
@@ -101,6 +105,7 @@ export default function Dashboard() {
                                     <div className="text-gray-800 font-medium">
                                         {user.firstname} {user.lastname}
                                     </div>
+                                    <button onClick={() => getTransactionHistory(user)}  className="text-white px-4 py-2 rounded-lg bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium">History</button>
                                     <button onClick={() => handleSendMoney(user)} className="text-white px-4 py-2 rounded-lg bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium">
                                         Send Money
                                     </button>

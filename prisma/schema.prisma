@@ -17,6 +17,8 @@ model User {
   password  String
   createdAt DateTime @default(now())
   accounts  Account[]
+  sentTransactions    Transaction[] @relation("sentTransactions")
+  receivedTransactions Transaction[] @relation("receivedTransactions")
 }
 
 model Account {
@@ -24,4 +26,15 @@ model Account {
   balance  Float  @default(0)
   userId   Int    // Foreign key
   user     User   @relation(fields: [userId], references: [id])
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  amount      Float
+  createdAt   DateTime @default(now())
+  senderId    Int
+  receiverId  Int
+
+  sender      User     @relation("sentTransactions", fields: [senderId], references: [id])
+  receiver    User     @relation("receivedTransactions", fields: [receiverId], references: [id])
 }

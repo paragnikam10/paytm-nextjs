@@ -41,5 +41,10 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/account/balance", "/api/user/users", "/api/account/transfer"],
+  matcher: [
+    "/api/account/balance",
+    "/api/user/users",
+    "/api/account/transfer",
+    "/api/account/transaction-history",
+  ],
 };

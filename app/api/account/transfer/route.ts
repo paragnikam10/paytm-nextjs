@@ -1,6 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { access } from "fs";
-import Error from "next/error";
 import { NextRequest, NextResponse } from "next/server";
 
 const client = new PrismaClient();
@@ -8,9 +6,9 @@ const client = new PrismaClient();
 export async function POST(req: NextRequest) {
   console.log("transfer route");
   try {
-    const userId = req.headers.get("x-user-id");
-    console.log("sender id", userId);
-    if (!userId) {
+    const senderId = req.headers.get("x-user-id");
+    console.log("sender id", senderId);
+    if (!senderId) {
       return NextResponse.json(
         {
           message: "User not authenticated",
@@ -20,10 +18,10 @@ export async function POST(req: NextRequest) {
         }
       );
     }
-    const { amount, to } = await req.json();
+    const { amount, to: receiverId } = await req.json();
     console.log("amount", amount);
-    console.log("to", to);
-    if (!amount || !to) {
+    console.log("to", receiverId);
+    if (!amount || !receiverId) {
       return NextResponse.json(
         {
           message: "Invalid request parameters",
@@ -34,7 +32,7 @@ export async function POST(req: NextRequest) {
 
     await client.$transaction(async (client) => {
       const account = await client.account.findFirst({
-        where: { userId: parseInt(userId) },
+        where: { userId: parseInt(senderId) },
       });
       console.log("account", account);
       if (!account || account.balance < amount) {
@@ -48,7 +46,7 @@ export async function POST(req: NextRequest) {
       }
 
       const toAccount = await client.account.findFirst({
-        where: { userId: parseInt(to) },
+        where: { userId: parseInt(receiverId) },
       });
       console.log("to account", toAccount);
       if (!toAccount) {
@@ -69,6 +67,14 @@ export async function POST(req: NextRequest) {
       await client.account.update({
         where: { id: toAccount.id },
         data: { balance: { increment: parseFloat(amount) } },
+      });
+
+      await client.transaction.create({
+        data: {
+          amount: parseFloat(amount),
+          senderId: parseInt(senderId),
+          receiverId: parseInt(receiverId),
+        },
       });
     });
     return NextResponse.json({
