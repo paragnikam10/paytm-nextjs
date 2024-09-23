@@ -54,35 +54,69 @@ export default function TransactionHistory() {
         }
     }, [receiverId])
 
+    function groupTransactionsByDate(transactions: Transaction[]): { [date: string]: Transaction[] } {
+        const groupedByDate: { [date: string]: Transaction[] } = {}
+        transactions.forEach((transaction) => {
+            const date = new Date(transaction.createdAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            });
+
+            if (!groupedByDate[date]) {
+                groupedByDate[date] = []
+            }
+            groupedByDate[date].push(transaction);
+        })
+        return groupedByDate
+    }
+
+    const groupedTransactions = groupTransactionsByDate(transactions);
+
     return (
         <div className="min-h-screen p-6">
-            <div className=" bg-white max-w-lg mx-auto border  border-gray-200 shadow hover:bg-gray-100  p-8 rounded-lg">
+            <div className=" bg-white max-w-lg mx-auto border  border-gray-200 shadow hover:bg-gray-100 p-8 rounded-lg">
 
                 <h2 className=" text-center text-2xl font-semibold mb-4 ">
                     {firstName?.toUpperCase()} {lastName?.toUpperCase()}
                 </h2>
 
                 {transactions.length > 0 ? (
-                    <ul className="space-y-4 mt-8">
-                        {transactions.map((transaction) => (
-                            <li
-                                key={transaction.id}
-                                className={`flex ${transaction.senderId === currentUserId ? "justify-end" : "justify-start"}`}
-                            >
-                                <div
-                                    className={`max-w-xs p-3 rounded-lg shadow-lg ${transaction.senderId === currentUserId ? " bg-gray-800 text-white" : "bg-gray-600 text-white"
-                                        }`}
-                                >
-                                    <p className="font-medium">₹{transaction.amount}</p>
-                                    <p className="text-sm">
-                                        {new Date(transaction.createdAt).toLocaleDateString()} {new Date(transaction.createdAt).toLocaleTimeString()}
-                                    </p>
+                    <div className="space-y-4 mt-8">
+                        {Object.entries(groupedTransactions).map(
+                            ([date, transactionsForDate]) => (
+                                <div key={date}>
+                                    <h3 className=" text-center font-semibold text-lg text-gray-700 mb-2">
+                                        {date}
+                                    </h3>
+
+                                    <ul className="space-y-4">
+                                        {transactionsForDate.map((transaction) => (
+                                            <li key={transaction.id} className={`flex ${transaction.senderId === currentUserId ? "justify-end" : "justify-start"}`}>
+                                                <div className={` relative  max-w-md rounded-lg shadow-lg ${transaction.senderId === currentUserId ? "bg-gray-800 text-white" : "bg-gray-600 text-white"}`}>
+                                                    <div className="  px-12 py-4   ">
+                                                        <div className=" mb-3 font-medium text-2xl   ">
+                                                            ₹{transaction.amount}
+                                                        </div>
+                                                    </div>
+                                                    <div className="  text-xs bottom-1 right-1 absolute ">
+                                                        {new Date(transaction.createdAt).toLocaleTimeString([], {
+                                                            hour: "2-digit",
+                                                            minute: "2-digit"
+                                                        })}
+                                                    </div>
+
+                                                </div>
+
+                                            </li>
+                                        ))}
+                                    </ul>
+
                                 </div>
-                            </li>
-                        ))}
-                    </ul>
+                            ))}
+                    </div>
                 ) : (
-                    <p>No transactions found</p>
+                    <p className="text-center mt-8 text-gray-800 text-lg">No transactios found</p>
                 )}
             </div>
         </div>
