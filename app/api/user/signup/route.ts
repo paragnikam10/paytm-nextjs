@@ -8,13 +8,6 @@ dotenv.config();
 const client = new PrismaClient();
 const SECRET_KEY = process.env.JWT_SECRET as string;
 
-export async function GET() {
-  return Response.json({
-    name: "parag nikam",
-    email: "paragnikam89@gmail.com",
-  });
-}
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
