@@ -1,18 +1,9 @@
-import axios from "axios";
 
-async function getUserData() {
-  try {
-    const response = await axios.get("http://localhost:3000/api/user/signup")
-    return response.data;
 
-  } catch (e) {
-    console.log(e);
-    return null;
-  }
-}
+
 
 export default async function Home() {
-  const userDetails = await getUserData();
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -36,7 +27,7 @@ export default async function Home() {
 
       <div className="flex flex-col justify-center items-center min-h-[calc(100vh-4rem)] ">
         <div className="bg-white shadow-lg  rounded-lg border border-gray-100 p-8 w-full max-w-3xl">
-          <h1 className="text-3xl font-semibold text-center mb-6 text-gray-800 ">Welcome</h1> 
+          <h1 className="text-3xl font-semibold text-center mb-6 text-gray-800 ">Welcome</h1>
           <p className="text-center text-gray-600 mb-8">what would you like to do today?</p>
 
           <div className="grid grid-cols-2 gap-6">
