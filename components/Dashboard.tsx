@@ -85,7 +85,7 @@ export default function Dashboard() {
                 </div>
 
                 <h3 className="text-lg font-semibold text-gray-700 mb-6">
-                    User's Balance : {" "}{balance !== null ? `₹${balance.toFixed(2)}` : "Loading..."}
+                    Users&apos; Balance : {" "}{balance !== null ? `₹${balance.toFixed(2)}` : "Loading..."}
                 </h3>
                 <div>
                     <input

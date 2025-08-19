@@ -45,7 +45,8 @@ export default function Signup() {
             <LabelledInput onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setUsername(e.target.value);
             }} label="Username" placeholder="harkirat@gmail" />
-            <LabelledInput onChange={(e: any) => {
+            <LabelledInput onChange={(e: React.ChangeEvent<HTMLInputElement>
+            ) => {
               setPassword(e.target.value)
             }} label="Password" type={"password"} placeholder="123456" />
             <button onClick={handleSignin} type="button" className="mt-8 w-full text-white bg-gray-800 focus:ring-4
