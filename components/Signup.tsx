@@ -5,8 +5,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Signup() {
-    const [firstname, setFirstname] = useState<String>("");
-    const [lastname, setLastname] = useState<String>("");
+    const [firstname, setFirstname] = useState<string>("");
+    const [lastname, setLastname] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const router = useRouter();
@@ -53,7 +53,7 @@ export default function Signup() {
                         <LabelledInput onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             setUsername(e.target.value);
                         }} label="Username" placeholder="harkirat@gmail" />
-                        <LabelledInput onChange={(e: any) => {
+                        <LabelledInput onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             setPassword(e.target.value)
                         }} label="Password" type={"password"} placeholder="123456" />
                         <button onClick={handleSignup} type="button" className="mt-8 w-full text-white bg-gray-800 focus:ring-4
