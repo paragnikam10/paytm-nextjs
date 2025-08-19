@@ -1,5 +1,5 @@
 import TransactionHistory from "@/components/TransactionHistory";
 
-export default function TransactionHistoryPage () {
+export default function TransactionHistoryPage() {
     return <TransactionHistory />
 }
