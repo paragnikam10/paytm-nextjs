@@ -1,9 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-const client = new PrismaClient();
-
 export async function POST(req: NextRequest) {
+  const client = new PrismaClient();
   console.log("transfer route");
   try {
     const senderId = req.headers.get("x-user-id");

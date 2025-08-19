@@ -5,10 +5,10 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-const client = new PrismaClient();
 const SECRET_KEY = process.env.JWT_SECRET as string;
 
 export async function POST(req: NextRequest) {
+  const client = new PrismaClient();
   try {
     const body = await req.json();
     const hashedPassword = await bcrypt.hash(body.password, 10);
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("Error adding data to database", error);
-    return Response.json(
+    return NextResponse.json(
       { message: "Error adding data to database" },
       { status: 500 }
     );

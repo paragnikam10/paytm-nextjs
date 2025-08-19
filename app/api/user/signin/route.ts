@@ -3,10 +3,10 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const client = new PrismaClient();
 const SECRET_KEY = process.env.JWT_SECRET as string;
 
 export async function POST(req: NextRequest) {
+  const client = new PrismaClient();
   try {
     const body = await req.json();
     const { username, password } = body;
