@@ -18,7 +18,7 @@ export default function SendMoney() {
     const handleTransferMoney = async () => {
         try {
             const token = localStorage.getItem("token")
-            const response = await axios.post("http://localhost:3000/api/account/transfer", {
+            const response = await axios.post("/api/account/transfer", {
                 amount: amount || null,
                 to: userId
             },

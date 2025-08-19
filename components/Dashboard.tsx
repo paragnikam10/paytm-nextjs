@@ -23,7 +23,7 @@ export default function Dashboard() {
             try {
                 const token = localStorage.getItem("token")
 
-                const response = await axios.get("http://localhost:3000/api/account/balance", {
+                const response = await axios.get("/api/account/balance", {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -44,7 +44,7 @@ export default function Dashboard() {
             const fetchUsers = async () => {
                 try {
                     const token = localStorage.getItem("token");
-                    const response = await axios.get(`http://localhost:3000/api/user/users?filter=${searchName}`, {
+                    const response = await axios.get(`/api/user/users?filter=${searchName}`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
