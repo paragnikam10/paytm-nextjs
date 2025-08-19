@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const account = await client.account.findMany({
+    const account = await client.account.findFirst({
       where: {
         userId: parseInt(userId, 10),
       },
